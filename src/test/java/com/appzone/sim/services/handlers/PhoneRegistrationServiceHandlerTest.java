@@ -1,6 +1,7 @@
 package com.appzone.sim.services.handlers;
 
 import com.appzone.sim.model.Application;
+import com.appzone.sim.repositories.PhoneRepository;
 import com.appzone.sim.repositories.impl.MemoryMtMessageRepository;
 import com.appzone.sim.repositories.impl.MemoryPhoneRepository;
 import com.appzone.sim.repositories.impl.MemorySmsRepository;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * author: arunoda.susiripala@gmail.com
  */
-public class AppRegistrationServiceHandlerTest extends TestCase {
+public class PhoneRegistrationServiceHandlerTest extends TestCase {
 
     private Mockery context ;
 
@@ -34,24 +35,20 @@ public class AppRegistrationServiceHandlerTest extends TestCase {
 
         final HttpServletRequest request = context.mock(HttpServletRequest.class);
 
-        AppRegistrationServiceHandler handler = new AppRegistrationServiceHandler();
+        PhoneRepository repository = new MemoryPhoneRepository();
+        PhoneRegistrationServiceHandler handler = new PhoneRegistrationServiceHandler(repository);
 
         context.checking(new Expectations(){{
             allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
-            will(returnValue(AppRegistrationServiceHandler.MATCHING_KEYWORD));
+            will(returnValue(PhoneRegistrationServiceHandler.MATCHING_KEYWORD));
 
-            allowing(request).getParameter(AppRegistrationServiceHandler.KEY_URL);
-            will(returnValue("the url"));
+            allowing(request).getParameter(PhoneRegistrationServiceHandler.KEY_PHONE_NO);
+            will(returnValue("00012"));
 
-            allowing(request).getParameter(AppRegistrationServiceHandler.KEY_USERNAME);
-            will(returnValue("the username"));
-
-            allowing(request).getParameter(AppRegistrationServiceHandler.KEY_PASSWORD);
-            will(returnValue("the password"));
         }});
 
         JSONObject json = new JSONObject();
-        json.put(AppRegistrationServiceHandler.JSON_KEY_RESULT, true);
+        json.put(PhoneRegistrationServiceHandler.JSON_KEY_RESULT, true);
 
         assertEquals(json.toJSONString(), handler.serve(request));
     }

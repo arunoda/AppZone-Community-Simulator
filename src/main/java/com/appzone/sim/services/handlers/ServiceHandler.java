@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ServiceHandler {
 
+    String JSON_KEY_RESULT = "result";
+    String JSON_KEY_ERROR = "error";
+
     void setNextServiceHandler(ServiceHandler serviceHandler);
 
     void setKeyWordMatcher(KeywordMatcher keyWordMatcher);

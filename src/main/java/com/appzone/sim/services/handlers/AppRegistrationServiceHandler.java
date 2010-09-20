@@ -18,8 +18,7 @@ public class AppRegistrationServiceHandler extends AbstractServiceHandler {
         MATCHING_KEYWORD = "app",
         KEY_URL = "url",
         KEY_USERNAME = "username",
-        KEY_PASSWORD = "password",
-        JSON_KEY_RESULT = "result";
+        KEY_PASSWORD = "password";
 
     public AppRegistrationServiceHandler() {
         setKeyWordMatcher(new DefaultKewordMatcher(MATCHING_KEYWORD));
@@ -37,7 +36,7 @@ public class AppRegistrationServiceHandler extends AbstractServiceHandler {
         Application.configure(url, username, password);
 
         JSONObject json = new JSONObject();
-        json.put(JSON_KEY_RESULT, true);
+        json.put(ServiceHandler.JSON_KEY_RESULT, true);
 
         return json.toJSONString();
     }

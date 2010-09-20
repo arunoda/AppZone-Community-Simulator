@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractServiceHandler implements ServiceHandler {
 
-    private ServiceHandler serviceHandler;
+    private ServiceHandler nextServiceHandler;
     private KeywordMatcher keywordMatcher;
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractServiceHandler.class);
     
     @Override
     public void setNextServiceHandler(ServiceHandler serviceHandler) {
-        this.serviceHandler = serviceHandler;
+        this.nextServiceHandler = serviceHandler;
     }
 
     @Override
@@ -33,11 +33,17 @@ public abstract class AbstractServiceHandler implements ServiceHandler {
         if(keywordMatcher.match(request)) {
             return doProcess(request);
         } else {
-            logger.debug("cannot find any Handler to serve");
-            JSONObject json = new JSONObject();
-            json.put("error", "no handler found");
 
-            return json.toJSONString();
+            if(nextServiceHandler != null) {
+                return nextServiceHandler.serve(request);
+            } else {
+                logger.debug("cannot find any Handler to serve");
+                JSONObject json = new JSONObject();
+                json.put("error", "no handler found");
+
+                return json.toJSONString();
+            }
+
         }
     }
 

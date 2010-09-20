@@ -2,6 +2,8 @@ package com.appzone.sim.services.handlers;
 
 import com.appzone.sim.model.Sms;
 import com.appzone.sim.repositories.SmsRepository;
+import com.appzone.sim.repositories.impl.MemoryMtMessageRepository;
+import com.appzone.sim.repositories.impl.MemoryPhoneRepository;
 import com.appzone.sim.repositories.impl.MemorySmsRepository;
 import junit.framework.TestCase;
 import org.jmock.Expectations;
@@ -23,6 +25,10 @@ public class ReceiveSmsCheckServiceHandlerTest extends TestCase {
         context = new Mockery() {{
             setImposteriser(ClassImposteriser.INSTANCE);
         }};
+
+        new MemoryMtMessageRepository().removeAll();
+        new MemorySmsRepository().removeAll();
+        new MemoryPhoneRepository().removeAll();
     }
 
     public void testServeNormal() {

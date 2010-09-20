@@ -19,6 +19,6 @@ public class DefaultKewordMatcher implements KeywordMatcher {
     public boolean match(HttpServletRequest request) {
 
         String value = request.getParameter(SERVICE_KEYWORD);
-        return matchingValue.equals(matchingValue);
+        return matchingValue.equals(value);
     }
 }

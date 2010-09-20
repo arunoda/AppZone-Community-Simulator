@@ -14,4 +14,15 @@
         <servlet-name>simulator</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>service</servlet-name>
+        <servlet-class>com.appzone.sim.Service</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>service</servlet-name>
+        <url-pattern>/service</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

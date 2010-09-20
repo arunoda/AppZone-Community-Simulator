@@ -1,0 +1,96 @@
+body,div,span,a,p,button{
+		font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+		color:rgb(50, 50, 50);
+		font-size:12px;
+}
+
+body{
+	text-align:center;
+	padding:0px;	
+	margin:0px;
+}
+
+.clear{
+	clear:both;	
+}
+
+#wrapper{
+	width:900px;
+	margin:auto;
+	text-align:left;	
+	padding:10px;
+	position:relative;
+}
+
+#topBar{
+	height:70px;
+}
+
+#topBar #heading{
+	width:450px;
+	float:left;
+	color: rgb(100, 100, 100)
+}
+#topBar #heading h1{
+	margin-bottom:0px;
+}
+
+#topBar #heading h2{
+	margin-top:0px;
+	font-size:13px;
+	padding:2px;
+	font-weight:normal;	
+}
+
+#topBar #session{
+	margin-top:10px;
+	width:200px;
+	float:right;
+}
+
+#logs #serverLog{
+	height:400px;
+	overflow : auto;
+}
+
+#logs #phoneLog{
+	height:100px;
+	overflow : auto;
+	border:1px solid rgb(150,150,150);
+	padding:10px;
+}
+
+#logs #pause{
+	width:70px;
+	height:30px;
+}
+
+#phoneNo{
+	border:1px solid rgb(200,200,200);	
+	height:25px;
+	font-size:15px;
+	margin:0px 10px 0px 0px;
+	background-color: rgb(240, 240, 240);
+}
+
+.phone .message {
+	margin: 0px 0px 10px 0px;	
+}
+
+.phone .inbox{
+	width:700px;
+	height:250px;
+	overflow : auto;
+}
+
+.phone .log{
+	width:700px;
+	height:100px;
+	overflow : auto;
+	border:1px solid rgb(150,150,150);
+	padding:10px;
+}
+
+#createSession{
+	text-align:left;	
+}

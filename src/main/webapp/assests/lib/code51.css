@@ -1,0 +1,25 @@
+/*************************************
+Table
+*************************************/
+
+table{
+	border-spacing:0px;
+}
+
+.code51Table{
+	border:1px solid #6b8e23;
+}
+
+.code51Table .tableHead{
+	background-color:#9acd32;
+	color:rgb(255,255,255);
+}
+
+.code51Table td{
+	padding:5px;
+	border-right:1px solid #6b8e23;
+}
+
+.code51Table .id {
+	display: none;
+}

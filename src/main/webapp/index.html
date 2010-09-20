@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>AppZone.lk Simulator</title>
+		<link href='assests/style.css' rel='stylesheet' />
+		<link href='assests/lib/code51.css' rel='stylesheet' />
+		<link type="text/css" href="assests/lib/custom-theme/jquery-ui-1.8.5.custom.css" rel="stylesheet" />
+
+		<script type="text/javascript" src="assests/lib/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="assests/lib/jquery-ui-1.8.2.custom.min.js"></script>
+		<script type="text/javascript" src="assests/lib/dateFormat.js"></script>
+		<script type="text/javascript" src="assests/lib/dynamic.js"></script>
+		<script type="text/javascript" src="assests/lib/table.ui.js"></script>
+        
+		<script type='text/javascript' src='assests/main.js' ></script>
+	</head>
+	<body>
+		<div id='wrapper'>
+			<div id='topBar'>
+				<div id='heading'>
+					<h1>AppZone.lk Community Simulator</h1>
+                    <h2></h2>
+				</div>
+				<div id='session'>
+					<button id='btn-config'>Configure the Simulator</button>
+				</div>
+				<div class='clear'></div>
+			</div>
+			<div id='contentBar'>
+				<ul>
+					<li><a href="#logs">View Logs</a></li>
+					<li><a href="#phones">Phones</a></li>
+				</ul>
+				<div id="logs">
+					<h2>Received Messages to the Simulator</h2>
+					<div id='serverLog'></div>
+				</div>
+				<div id="phones">
+					<input type='text' id='phoneNo' size='30'/><button id='newPhone'>New Phone</button>
+					<br><br>
+					<div id='phoneList'>
+						<ul id='phoneNames'>
+
+						</ul>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class='phone' id='samplePhone' style='display:none'>
+			<h3>Send a Message</h3>
+			<textarea class='message' rows="1" cols="50"></textarea><br>
+			<button class='send'>Send</button>
+			<h3>Inbox</h3>
+			<div class='inbox'></div>
+		</div>
+
+		<div id='createSession' title="Create New Session" style='display:none'>
+			AppName<br>
+			<input type='text' id='appName'/><br>
+			Password<br>
+			<input type='text' id='password'/><br>
+			reciever URL<br>
+			<input type='text' id='reciever' size=60/><br><br>
+			<button id='createSessionBtn'>Create</button>
+		</div>
+	</body>
+</html>

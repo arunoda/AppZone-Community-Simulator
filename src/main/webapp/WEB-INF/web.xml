@@ -12,7 +12,7 @@
 
     <servlet-mapping>
         <servlet-name>simulator</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/simulator</url-pattern>
     </servlet-mapping>
 
     <servlet>

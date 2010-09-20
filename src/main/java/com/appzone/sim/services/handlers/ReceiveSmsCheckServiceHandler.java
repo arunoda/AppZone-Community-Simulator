@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class ReceiveSmsCheckServiceHandler extends AbstractServiceHandler {
         long since = Long.parseLong(sinceStr);
 
         List<Sms> messages = smsRepository.find(address, since);
-
+       
         JSONArray list = new JSONArray();
         
         for(Sms sms: messages) {

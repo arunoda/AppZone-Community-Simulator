@@ -41,7 +41,7 @@ public class MtLogCheckServiceHandler extends AbstractServiceHandler {
 
         long since = Long.parseLong(sinceStr);
 
-        List<MtMessage> messages = mtMessageRepository.find(since);
+        List<MtMessage> messages = mtMessageRepository.find(since);      
 
         JSONArray list = new JSONArray();
 

@@ -12,7 +12,7 @@ public class ResponseGenerator {
      */
     public String generateResponseAfterMessageProcessed(boolean processed) {
 
-        String correlator = "" + ((int)(Math.random()*10000000000000L));
+        String correlator = "" + ((int)(Math.random()*1000000000L));
 
         if(processed) {
             return generateXMLResponse(correlator, "SBL-SMS-MT-2000", "SUCCESS");

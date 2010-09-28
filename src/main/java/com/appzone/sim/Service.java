@@ -28,12 +28,12 @@ public class Service extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        logger.info("Starting service with : {}", req.getQueryString());
+        logger.debug("Starting service with : {}", req.getQueryString());
 
         ServiceHandler serviceHandler = buildServiceHandlerChain();
         String response = serviceHandler.serve(req);
 
-        logger.info("Printing response: {}", response);
+        logger.debug("Printing response: {}", response);
         resp.getWriter().print(response);
     }
 

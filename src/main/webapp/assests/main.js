@@ -51,7 +51,9 @@ function getServerLog() {
 			var message = response[index]
 			var time = parseFloat(message.receivedDate)
 			var date = new Date(time)
-			var item = [ date.format("dd-mm-yyyy @ HH:MM:ss"), message.message,
+			
+			//adding items to the table
+			var item = [ date.format("dd-mm-yyyy @ HH:MM:ss"), escapeHTML(message.message),
 					message.addresses.join(",") ]
 
 			table.prependRow(item)
@@ -167,7 +169,8 @@ function getSMSLog(phoneNo) {
 			var sms = response[index]
 			var time = parseFloat(sms.receivedDate)
 			var date = new Date(time)
-			var item = [ date.format("dd-mm-yyyy @ HH:MM"), sms.message ];
+			//adding item to the table
+			var item = [ date.format("dd-mm-yyyy @ HH:MM"), escapeHTML(sms.message) ];
 			inboxes[phoneNo].prependRow(item)
 
 			if (time > maxSmsLogDates[phoneNo])
@@ -218,3 +221,15 @@ $(document).ready(
 								$("#createSession").dialog('close');
 							});
 		});
+
+/***************************************
+ * Utility Functions
+ * ************************************/
+
+function escapeHTML (str)
+{
+   var div = document.createElement('div');
+   var text = document.createTextNode(str);
+   div.appendChild(text);
+   return div.innerHTML;
+};

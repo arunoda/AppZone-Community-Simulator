@@ -6,12 +6,14 @@
 		<link href='assests/style.css' rel='stylesheet' />
 		<link href='assests/lib/code51.css' rel='stylesheet' />
 		<link type="text/css" href="assests/lib/custom-theme/jquery-ui-1.8.5.custom.css" rel="stylesheet" />
+		<link type="text/css" href="assests/lib/jquery.tools.css" rel="stylesheet" />
 
 		<script type="text/javascript" src="assests/lib/jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="assests/lib/jquery-ui-1.8.2.custom.min.js"></script>
 		<script type="text/javascript" src="assests/lib/dateFormat.js"></script>
 		<script type="text/javascript" src="assests/lib/dynamic.js"></script>
 		<script type="text/javascript" src="assests/lib/table.ui.js"></script>
+		<script type="text/javascript" src="assests/lib/jquery.tools.min.js"></script>
         
 		<script type='text/javascript' src='assests/main.js' ></script>
 	</head>
@@ -23,7 +25,7 @@
                     <h2></h2>
 				</div>
 				<div id='session'>
-					<button id='btn-config'>Configure the Simulator</button>
+					<button id='btn-config' title='Click Here to configure the Simulator to be used with your application'>Configure the Simulator</button>
 				</div>
 				<div class='clear'></div>
 			</div>
@@ -58,13 +60,13 @@
 		</div>
 
 		<div id='createSession' title="Create New Session" style='display:none'>
-			AppName<br>
-			<input type='text' id='appName'/><br>
+			AppId<br>
+			<input type='text' id='appName' title="AppId to be used when you are sending messages"/><br>
 			Password<br>
-			<input type='text' id='password'/><br>
-			reciever URL<br>
-			<input type='text' id='reciever' size=60/><br><br>
-			<button id='createSessionBtn'>Create</button>
+			<input type='text' id='password' title="password to be used when you are sending messages"/><br>
+			Receiver Url<br>
+			<input type='text' id='reciever' size=60 title="URL where your application listening for incoming messages" /><br><br>
+			<button id='createSessionBtn'>Configure</button>
 		</div>
 	</body>
 </html>

@@ -22,7 +22,9 @@
 			<div id='topBar'>
 				<div id='heading'>
 					<h1>AppZone.lk Community Simulator</h1>
-                    <h2></h2>
+                    <div id='simulator-info' title='Use this URL when you need to send messages (copy and paste)'>
+                    	<span>Simulator Runs On</span> <input type="text" value="" >
+                    </div>
 				</div>
 				<div id='session'>
 					<button id='btn-config' title='Click Here to configure the Simulator to be used with your application'>Configure the Simulator</button>
@@ -31,15 +33,15 @@
 			</div>
 			<div id='contentBar'>
 				<ul>
-					<li><a href="#logs">View Logs</a></li>
-					<li><a href="#phones">Phones</a></li>
+					<li><a href="#logs" title="Click here to View messages received to the Simulator">Incoming Message Log</a></li>
+					<li><a href="#phones" title="Click here to interact with your application with simulated mobile phones">Phones</a></li>
 				</ul>
 				<div id="logs">
 					<h2>Received Messages to the Simulator</h2>
 					<div id='serverLog'></div>
 				</div>
 				<div id="phones">
-					<input type='text' id='phoneNo' size='30'/><button id='newPhone'>New Phone</button>
+					Phone No: <input type='text' id='phoneNo' size='30'/><button id='newPhone'>Create</button>
 					<br><br>
 					<div id='phoneList'>
 						<ul id='phoneNames'>
@@ -53,7 +55,7 @@
 
 		<div class='phone' id='samplePhone' style='display:none'>
 			<h3>Send a Message</h3>
-			<textarea class='message' rows="1" cols="50"></textarea><br>
+			<textarea title="Type your message to send your configured application" class='message' rows="1" cols="50" ></textarea><br>
 			<button class='send'>Send</button>
 			<h3>Inbox</h3>
 			<div class='inbox'></div>

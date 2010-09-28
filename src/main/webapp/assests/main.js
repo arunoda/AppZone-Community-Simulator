@@ -17,12 +17,15 @@ function displaySimulatorInfo() {
 	if (url.substr(url.length - 1, url.length) != "/")
 		url += "/"
 	url += "simulator"
-	$('#heading h2').html("runs on: " + url);
+	$('#heading #simulator-info input').attr('value', url);
 }
 
 function enableToolTipSupport() {
 	$('#btn-config').tooltip().dynamic();
+	$('#contentBar a').tooltip();
+	$('#heading #simulator-info').tooltip().dynamic();
 	$('input[title]').tooltip().dynamic();
+
 }
 
 /*******************************************************************************
@@ -88,8 +91,15 @@ var inboxes = {}
 var maxSmsLogDates = []
 
 $(document).ready(function() {
-	$('#phones #newPhone').click(function() {
+	$('#phones #newPhone').click(function() {		
 		var phoneNo = $('#phones #phoneNo').attr('value');
+		//validation
+		if(phoneNo.trim() == "") {
+			alert("Please enter the Phone Number");
+			$('#phones #phoneNo').focus();
+			return;
+		}
+		
 		new Phone(phoneNo);
 		$('#phones #phoneNo').attr('value', '');
 		totalPhones++;
@@ -109,7 +119,7 @@ function Phone(phoneNo) {
 	var index = $('#phoneList').tabs('add', "#" + phoneNo, phoneNo);
 	$('#phoneList').tabs('select', totalPhones);
 	$('#' + phoneNo + ' .message').focus();
-
+	
 	// create the inbox
 	var inbox = new Table('#' + phoneNo + ' .inbox');
 	inbox.setHeading( [ {

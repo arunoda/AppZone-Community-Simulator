@@ -23,23 +23,34 @@ body{
 }
 
 #topBar{
-	height:70px;
+	margin-top:10px;
 }
 
 #topBar #heading{
-	width:450px;
+	width:600px;
 	float:left;
 	color: rgb(100, 100, 100)
 }
 #topBar #heading h1{
-	margin-bottom:0px;
+	margin-bottom:10px;
 }
 
-#topBar #heading h2{
-	margin-top:0px;
-	font-size:13px;
-	padding:2px;
+#topBar #heading #simulator-info {
+	margin-bottom: 10px;	
+}
+#topBar #heading #simulator-info span {
+	font-size:16px;
 	font-weight:normal;	
+	color:blue;
+}
+
+#topBar #heading #simulator-info input {
+	width: 300px;
+	border: 1px solid rgb(200, 200, 200);
+	padding:5px;
+	color:rgb(50,50,50);
+	font-family: 'lucida grande', tahoma, verdana, arial, sans-serif;
+	
 }
 
 #topBar #session{

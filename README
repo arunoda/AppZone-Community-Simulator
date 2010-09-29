@@ -1,6 +1,18 @@
-AppZone Comunity Simulator
+AppZone Community Simulator
 ======================================
 Simulator Powered by the AppZone.lk community
 
-comming soon
+1.0 Introduction
+-----------------
+This is a SMS Simulator for the Appzone.lk platform and simulate both server and
+client as mobile phones
+
+Ultimately This is Java Web project and when build using maven2 you can use with 
+any servlet container
+
+2.0 Distribution
+-----------------
+If you would not like to build your self you can get the binary distribution as well
+visit http://bit.ly/appzone-simulator
+and soon simulator will be available on the appzone.lk website too
 

@@ -51,10 +51,10 @@ function getServerLog() {
 			var message = response[index]
 			var time = parseFloat(message.receivedDate)
 			var date = new Date(time)
-			
-			//adding items to the table
-			var item = [ date.format("dd-mm-yyyy @ HH:MM:ss"), escapeHTML(message.message),
-					message.addresses.join(",") ]
+
+			// adding items to the table
+			var item = [ date.format("dd-mm-yyyy @ HH:MM:ss"),
+					escapeHTML(message.message), message.addresses.join(",") ]
 
 			table.prependRow(item)
 
@@ -69,7 +69,7 @@ function getServerLog() {
 
 function createLogTable() {
 
-	table.setHeading( [ {
+	table.setHeading([ {
 		name : "date",
 		title : "Received Date",
 		width : 170
@@ -93,15 +93,15 @@ var inboxes = {}
 var maxSmsLogDates = []
 
 $(document).ready(function() {
-	$('#phones #newPhone').click(function() {		
+	$('#phones #newPhone').click(function() {
 		var phoneNo = $('#phones #phoneNo').attr('value');
-		//validation
-		if(phoneNo.trim() == "") {
+		// validation
+		if (phoneNo.trim() == "") {
 			alert("Please enter the Phone Number");
 			$('#phones #phoneNo').focus();
 			return;
 		}
-		
+
 		new Phone(phoneNo);
 		$('#phones #phoneNo').attr('value', '');
 		totalPhones++;
@@ -121,10 +121,10 @@ function Phone(phoneNo) {
 	var index = $('#phoneList').tabs('add', "#" + phoneNo, phoneNo);
 	$('#phoneList').tabs('select', totalPhones);
 	$('#' + phoneNo + ' .message').focus();
-	
+
 	// create the inbox
 	var inbox = new Table('#' + phoneNo + ' .inbox');
-	inbox.setHeading( [ {
+	inbox.setHeading([ {
 		name : "date",
 		title : "Received Date",
 		width : 170
@@ -169,8 +169,9 @@ function getSMSLog(phoneNo) {
 			var sms = response[index]
 			var time = parseFloat(sms.receivedDate)
 			var date = new Date(time)
-			//adding item to the table
-			var item = [ date.format("dd-mm-yyyy @ HH:MM"), escapeHTML(sms.message) ];
+			// adding item to the table
+			var item = [ date.format("dd-mm-yyyy @ HH:MM"),
+					escapeHTML(sms.message) ];
 			inboxes[phoneNo].prependRow(item)
 
 			if (time > maxSmsLogDates[phoneNo])
@@ -192,12 +193,16 @@ $(document).ready(
 		function() {
 
 			$('#btn-config').click(function() {
-				$("#createSession").dialog( {
+				$("#createSession").dialog({
 					width : 450,
 					height : 200,
 					modal : true
 				});
+				
+				//use 2 times inorder get focus on the appId field with the tooltip 
 				$('#createSession #appName').focus();
+				$('#createSession #appName').focus();
+				
 			});
 
 			$('#createSessionBtn')
@@ -222,14 +227,13 @@ $(document).ready(
 							});
 		});
 
-/***************************************
+/*******************************************************************************
  * Utility Functions
- * ************************************/
+ ******************************************************************************/
 
-function escapeHTML (str)
-{
-   var div = document.createElement('div');
-   var text = document.createTextNode(str);
-   div.appendChild(text);
-   return div.innerHTML;
+function escapeHTML(str) {
+	var div = document.createElement('div');
+	var text = document.createTextNode(str);
+	div.appendChild(text);
+	return div.innerHTML;
 };

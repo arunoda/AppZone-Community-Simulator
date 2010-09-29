@@ -101,29 +101,34 @@ $(document).ready(function() {
 			$('#phones #phoneNo').focus();
 			return;
 		}
-
-		new Phone(phoneNo);
-		$('#phones #phoneNo').attr('value', '');
-		totalPhones++;
+		
+		//notify server about the creation of the phone
+		$.get('service?service=phone&number=' + phoneNo, function(resp) {
+			var response = {}
+			eval("response = " + resp);
+			new Phone(response.md5PhoneNo, phoneNo);
+			$('#phones #phoneNo').attr('value', '');
+			totalPhones++;
+		});
 	});
 
 });
 
-function Phone(phoneNo) {
-
-	// notify server about the creation of the phone
-	$.get('service?service=phone&number=' + phoneNo);
+function Phone(md5PhoneNo, phoneNo) {
 
 	// Phone UI Creation
-	$phoneDiv = '<div id="' + phoneNo + '" class="phone">'
+	$phoneDiv = '<div id="' + md5PhoneNo + '" class="phone">'
 			+ $('#samplePhone').html() + '</div>';
 	$('#phoneList').append($phoneDiv);
-	var index = $('#phoneList').tabs('add', "#" + phoneNo, phoneNo);
+	var index = $('#phoneList').tabs('add', "#" + md5PhoneNo, phoneNo);
 	$('#phoneList').tabs('select', totalPhones);
-	$('#' + phoneNo + ' .message').focus();
-
+	$('#' + md5PhoneNo + ' .message').focus();
+	//display md5Name Info
+	$('#' + md5PhoneNo + ' .md5Name').text("Internally Represent as: " + md5PhoneNo);
+	$('#' + md5PhoneNo + ' .md5Name').tooltip().dynamic();
+	
 	// create the inbox
-	var inbox = new Table('#' + phoneNo + ' .inbox');
+	var inbox = new Table('#' + md5PhoneNo + ' .inbox');
 	inbox.setHeading([ {
 		name : "date",
 		title : "Received Date",
@@ -134,32 +139,38 @@ function Phone(phoneNo) {
 		width : 400
 	} ]);
 	inbox.draw();
-	inboxes[phoneNo] = inbox
-	maxSmsLogDates[phoneNo] = 0
+	inboxes[md5PhoneNo] = inbox
+	maxSmsLogDates[md5PhoneNo] = 0
 
 	// load the sms's to the inbox
-	getSMSLog(phoneNo);
+	getSMSLog(md5PhoneNo);
 
 	// Send MO Functionality
-	$('#' + phoneNo + ' .send').click(
+	$('#' + md5PhoneNo + ' .send').click(
 			function() {
 
 				var callback = function(resp) {
+					var response = {}
+					eval("response = " + resp)
+					if(response['error']) {
+						alert(response.error + "\nPlease Configure the Simulator for Receiver URL")
+					} else {
+						alert("Messege Sent!");
+					}
 
-					alert("Messege Sent!");
-					$('#' + phoneNo + ' .message').attr('value', '')
-					$('#' + phoneNo + ' .message').focus()
+					$('#' + md5PhoneNo + ' .message').attr('value', '')
+					$('#' + md5PhoneNo + ' .message').focus()
 				}
 
-				var message = $('#' + phoneNo + ' .message').attr('value')
+				var message = $('#' + md5PhoneNo + ' .message').attr('value')
 
-				$.get('service?service=sendmo&address=' + phoneNo + '&message='
+				$.get('service?service=sendmo&address=' + md5PhoneNo + '&message='
 						+ message, callback);
 			});
 
 }
 
-function getSMSLog(phoneNo) {
+function getSMSLog(md5PhoneNo) {
 
 	var callback = function(resp) {
 
@@ -172,17 +183,17 @@ function getSMSLog(phoneNo) {
 			// adding item to the table
 			var item = [ date.format("dd-mm-yyyy @ HH:MM"),
 					escapeHTML(sms.message) ];
-			inboxes[phoneNo].prependRow(item)
+			inboxes[md5PhoneNo].prependRow(item)
 
-			if (time > maxSmsLogDates[phoneNo])
-				maxSmsLogDates[phoneNo] = time
+			if (time > maxSmsLogDates[md5PhoneNo])
+				maxSmsLogDates[md5PhoneNo] = time
 		}
 
-		setTimeout('getSMSLog("' + phoneNo + '")', 1000);
+		setTimeout('getSMSLog("' + md5PhoneNo + '")', 1000);
 	}
 
-	$.get('service?service=sms&address=' + phoneNo + "&since="
-			+ maxSmsLogDates[phoneNo], callback);
+	$.get('service?service=sms&address=' + md5PhoneNo + "&since="
+			+ maxSmsLogDates[md5PhoneNo], callback);
 }
 
 /*******************************************************************************

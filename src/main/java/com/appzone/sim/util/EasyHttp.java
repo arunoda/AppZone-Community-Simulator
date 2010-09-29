@@ -37,7 +37,7 @@ public class EasyHttp {
 	} */
 
 	public String excutePost(String targetURL, String urlParameters)
-            throws IOException {
+            throws Exception {
 		URL url;
 		HttpURLConnection connection = null;
 		try {
@@ -57,7 +57,7 @@ public class EasyHttp {
 
 		} catch (Exception e) {
 			logger.error("Error occcured while sending the request", e);
-			throw new IOException("Error occcured while sending the request", e);
+			throw e;
 
 		} finally {
 

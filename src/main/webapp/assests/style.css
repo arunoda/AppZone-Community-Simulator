@@ -88,6 +88,12 @@ body{
 	margin: 0px 0px 10px 0px;	
 }
 
+.phone .md5Name {
+	font-size: 15px;
+	color: blue;
+	cursor: pointer;	
+}
+
 .phone .inbox{
 	width:700px;
 	height:250px;

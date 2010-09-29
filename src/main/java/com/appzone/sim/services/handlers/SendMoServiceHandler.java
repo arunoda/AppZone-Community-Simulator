@@ -40,7 +40,7 @@ public class SendMoServiceHandler extends AbstractServiceHandler {
 
         try {
             String queryString = String.format("address=%s&message=%s&correlator=%s",
-                    URLEncoder.encode(address, "UTF-8"), URLEncoder.encode(message, "UTF-8"), URLEncoder.encode(correlator, "UTF-8"));
+                    address, URLEncoder.encode(message, "UTF-8"), URLEncoder.encode(correlator, "UTF-8"));
 
             logger.info("sending MO request as: {}", queryString);
             String response = http.excutePost(application.getUrl(), queryString);
@@ -55,7 +55,7 @@ public class SendMoServiceHandler extends AbstractServiceHandler {
             logger.error("Error while sending http request", e);
 
             JSONObject json = new JSONObject();
-            json.put(ServiceHandler.JSON_KEY_ERROR, e.toString());
+            json.put(ServiceHandler.JSON_KEY_ERROR, e.getMessage());
             return json.toJSONString();
         }
 

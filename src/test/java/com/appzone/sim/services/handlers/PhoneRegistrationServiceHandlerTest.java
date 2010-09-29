@@ -47,9 +47,6 @@ public class PhoneRegistrationServiceHandlerTest extends TestCase {
 
         }});
 
-        JSONObject json = new JSONObject();
-        json.put(PhoneRegistrationServiceHandler.JSON_KEY_RESULT, true);
-
-        assertEquals(json.toJSONString(), handler.serve(request));
+        assertTrue(handler.serve(request).contains(PhoneRegistrationServiceHandler.JSON_KEY_MD5_PHONE_NO));
     }
 }

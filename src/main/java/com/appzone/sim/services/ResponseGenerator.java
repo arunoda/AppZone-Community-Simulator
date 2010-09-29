@@ -12,7 +12,7 @@ public class ResponseGenerator {
      */
     public String generateResponseAfterMessageProcessed(boolean processed) {
 
-        String correlator = "" + ((int)(Math.random()*1000000000L));
+        String correlator = getCorrelator();
 
         if(processed) {
             return generateXMLResponse(correlator, "SBL-SMS-MT-2000", "SUCCESS");
@@ -33,4 +33,14 @@ public class ResponseGenerator {
 
         return xmlString;
     }
+    
+    public String generateResponseWhenLoginFailed() {
+		
+    	return generateXMLResponse(getCorrelator(), "401", "UnAuthorized");
+	}
+    
+    public String getCorrelator() {
+    	return "" + ((int)(Math.random()*1000000000L));
+    }
+
 }

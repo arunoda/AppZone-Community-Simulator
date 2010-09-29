@@ -1,5 +1,6 @@
 package com.appzone.sim;
 
+import com.appzone.sim.model.Application;
 import com.appzone.sim.model.MtMessage;
 import com.appzone.sim.repositories.MtMessageRepository;
 import com.appzone.sim.repositories.PhoneRepository;
@@ -7,6 +8,8 @@ import com.appzone.sim.repositories.SmsRepository;
 import com.appzone.sim.repositories.impl.MemoryMtMessageRepository;
 import com.appzone.sim.repositories.impl.MemoryPhoneRepository;
 import com.appzone.sim.repositories.impl.MemorySmsRepository;
+import com.appzone.sim.services.AuthenticationService;
+import com.appzone.sim.services.BasicAuthAuthenticationService;
 import com.appzone.sim.services.MtMessageProcessor;
 import com.appzone.sim.services.ResponseGenerator;
 import org.slf4j.Logger;
@@ -36,8 +39,19 @@ public class Simulator extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //TODO basic auth authentication
+    	//Creating Response Generation Object
+        ResponseGenerator responseGenerator = new ResponseGenerator();
         
+        //authentication
+        AuthenticationService authenticationService = new BasicAuthAuthenticationService(Application.getApplication());
+        if(!authenticationService.authenticate(req)) {
+        	//authentication failed
+        	String response = responseGenerator.generateResponseWhenLoginFailed();
+        	resp.getWriter().print(response);
+        	return;
+        }
+    	
+    	
         //generating mtMessage
         List<String> addresses = Arrays.asList(req.getParameterValues("address"));
         String message = req.getParameter("message");
@@ -53,9 +67,6 @@ public class Simulator extends HttpServlet {
         //creating mtMessage Processor
         MtMessageProcessor mtMessageProcessor =
                 new MtMessageProcessor(mtMessageRepository, smsRepository, phoneRepository);
-
-        //Creating Response Generation Object
-        ResponseGenerator responseGenerator = new ResponseGenerator();
 
         //do the processing
         boolean processed = mtMessageProcessor.process(mtMessage);

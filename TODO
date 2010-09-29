@@ -1,12 +1,12 @@
 1.  Implement Auth										:
 2.  Change the Configure UI								:	Done
-2.  md5 address send									:
-3.  highlight runs on simulator (use text box)			:
-4.  Validate addNew Phone 								:
-5.  AddSome Field Name									:
-6.  Add Documentation Help (ToolTips)					:
-7.  Change View Logs to Simulator Logs					:
-8.  Look For Correlation								:
-9.  Move keywords to a property file					:
+2.  md5 address send									:	
+3.  highlight runs on simulator (use text box)			:	Done
+4.  Validate addNew Phone 								:	Done
+5.  AddSome Field Name									:	Done
+6.  Add Documentation Help (ToolTips)					:	Done
+7.  Change View Logs to Simulator Logs					:	Done	
+8.  Look For Correlation								:	Done
+9.  Move keywords to a property file					:	
 10. add licence and copyright							:
 11. create a proper readme								:

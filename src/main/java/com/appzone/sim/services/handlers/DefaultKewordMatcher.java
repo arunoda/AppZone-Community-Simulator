@@ -7,18 +7,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DefaultKewordMatcher implements KeywordMatcher {
 
-    public static final String SERVICE_KEYWORD = "service";
+	public static final String SERVICE_KEYWORD = "service";
 
-    private final String matchingValue;
+	private final String matchingValue;
 
-    public DefaultKewordMatcher(String matchingValue) {
-        this.matchingValue = matchingValue;
-    }
+	public DefaultKewordMatcher(String matchingValue) {
+		this.matchingValue = matchingValue;
+	}
 
-    @Override
-    public boolean match(HttpServletRequest request) {
+	@Override
+	public boolean match(HttpServletRequest request) {
 
-        String value = request.getParameter(SERVICE_KEYWORD);
-        return matchingValue.equals(value);
-    }
+		String value = request.getParameter(SERVICE_KEYWORD);
+		return matchingValue.equals(value);
+	}
 }

@@ -16,45 +16,41 @@ import java.util.List;
  */
 public class ReceiveSmsCheckServiceHandler extends AbstractServiceHandler {
 
-    public final static String
-        MATCHING_KEYWORD = "sms",
-        KEY_SINCE = "since",
-        KEY_ADDRESS = "address",
-        JSON_KEY_MESSAGE = "message",
-        JSON_KEY_RECEIVED_DATE = "receivedDate";
+	public final static String MATCHING_KEYWORD = "sms", KEY_SINCE = "since", KEY_ADDRESS = "address",
+			JSON_KEY_MESSAGE = "message", JSON_KEY_RECEIVED_DATE = "receivedDate";
 
-    private final static Logger logger = LoggerFactory.getLogger(ReceiveSmsCheckServiceHandler.class);
+	private final static Logger logger = LoggerFactory.getLogger(ReceiveSmsCheckServiceHandler.class);
 
-    private SmsRepository smsRepository;
+	private SmsRepository smsRepository;
 
-    public ReceiveSmsCheckServiceHandler(SmsRepository smsRepository) {
+	public ReceiveSmsCheckServiceHandler(SmsRepository smsRepository) {
 
-        this.smsRepository = smsRepository;
-        setKeyWordMatcher(new DefaultKewordMatcher(MATCHING_KEYWORD));
-    }
+		this.smsRepository = smsRepository;
+		setKeyWordMatcher(new DefaultKewordMatcher(MATCHING_KEYWORD));
+	}
 
-    @Override
-    protected String doProcess(HttpServletRequest request) {
+	@Override
+	protected String doProcess(HttpServletRequest request) {
 
-        String address = request.getParameter(KEY_ADDRESS);
-        String sinceStr = request.getParameter(KEY_SINCE);
-        logger.debug("request sms messages for: {} since: {}", address, sinceStr);
-        long since = Long.parseLong(sinceStr);
+		String address = request.getParameter(KEY_ADDRESS);
+		String sinceStr = request.getParameter(KEY_SINCE);
+		logger.debug("request sms messages for: {} since: {}", address, sinceStr);
+		long since = Long.parseLong(sinceStr);
 
-        List<Sms> messages = smsRepository.find(address, since);
-       
-        JSONArray list = new JSONArray();
-        
-        for(Sms sms: messages) {
-            JSONObject json = new JSONObject();
-            json.put(JSON_KEY_MESSAGE, sms.getMessage());
-            json.put(JSON_KEY_RECEIVED_DATE, sms.getReceivedDate());
+		List<Sms> messages = smsRepository.find(address, since);
 
-            list.add(json);
-        }
+		JSONArray list = new JSONArray();
 
-        logger.debug("returning response: {}", list);
+		for (Sms sms : messages) {
+			JSONObject json = new JSONObject();
+			json.put(JSON_KEY_MESSAGE, sms.getMessage());
+			json.put(JSON_KEY_RECEIVED_DATE, sms.getReceivedDate());
 
-        return list.toJSONString();
-    }
+			list.add(json);
+		}
+
+		logger.debug("returning response: {}", list);
+
+		return list.toJSONString();
+	}
 }

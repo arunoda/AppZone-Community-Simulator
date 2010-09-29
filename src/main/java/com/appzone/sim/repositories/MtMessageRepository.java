@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface MtMessageRepository {
 
-    void add(MtMessage message);
+	void add(MtMessage message);
 
-    List<MtMessage> find(long since);
+	List<MtMessage> find(long since);
 
-    void removeAll();
-    
+	void removeAll();
+
 }

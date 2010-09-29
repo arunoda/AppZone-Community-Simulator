@@ -29,53 +29,52 @@ import java.util.List;
  */
 public class Simulator extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(Simulator.class);
-    
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private static final Logger logger = LoggerFactory.getLogger(Simulator.class);
 
-    }
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	}
 
-    	//Creating Response Generation Object
-        ResponseGenerator responseGenerator = new ResponseGenerator();
-        
-        //authentication
-        AuthenticationService authenticationService = new BasicAuthAuthenticationService(Application.getApplication());
-        if(!authenticationService.authenticate(req)) {
-        	//authentication failed
-        	String response = responseGenerator.generateResponseWhenLoginFailed();
-        	resp.getWriter().print(response);
-        	return;
-        }
-    	
-    	
-        //generating mtMessage
-        List<String> addresses = Arrays.asList(req.getParameterValues("address"));
-        String message = req.getParameter("message");
-        MtMessage mtMessage = new MtMessage(message, addresses, new Date().getTime());
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        logger.info("message received {}", mtMessage);
+		// Creating Response Generation Object
+		ResponseGenerator responseGenerator = new ResponseGenerator();
 
-        //creating dependencies
-        MtMessageRepository mtMessageRepository = new MemoryMtMessageRepository();
-        SmsRepository smsRepository = new MemorySmsRepository();
-        PhoneRepository phoneRepository = new MemoryPhoneRepository();
+		// authentication
+		AuthenticationService authenticationService = new BasicAuthAuthenticationService(Application.getApplication());
+		if (!authenticationService.authenticate(req)) {
+			// authentication failed
+			String response = responseGenerator.generateResponseWhenLoginFailed();
+			resp.getWriter().print(response);
+			return;
+		}
 
-        //creating mtMessage Processor
-        MtMessageProcessor mtMessageProcessor =
-                new MtMessageProcessor(mtMessageRepository, smsRepository, phoneRepository);
+		// generating mtMessage
+		List<String> addresses = Arrays.asList(req.getParameterValues("address"));
+		String message = req.getParameter("message");
+		MtMessage mtMessage = new MtMessage(message, addresses, new Date().getTime());
 
-        //do the processing
-        boolean processed = mtMessageProcessor.process(mtMessage);
+		logger.info("message received {}", mtMessage);
 
-        //sending the request
-        String response = responseGenerator.generateResponseAfterMessageProcessed(processed);
-        logger.info("message processed with the response: {}", response);
-        resp.getWriter().print(response);                        
+		// creating dependencies
+		MtMessageRepository mtMessageRepository = new MemoryMtMessageRepository();
+		SmsRepository smsRepository = new MemorySmsRepository();
+		PhoneRepository phoneRepository = new MemoryPhoneRepository();
 
-    }
+		// creating mtMessage Processor
+		MtMessageProcessor mtMessageProcessor = new MtMessageProcessor(mtMessageRepository, smsRepository,
+				phoneRepository);
+
+		// do the processing
+		boolean processed = mtMessageProcessor.process(mtMessage);
+
+		// sending the request
+		String response = responseGenerator.generateResponseAfterMessageProcessed(processed);
+		logger.info("message processed with the response: {}", response);
+		resp.getWriter().print(response);
+
+	}
 
 }

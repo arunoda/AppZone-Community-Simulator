@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface SmsRepository {
 
-    void add(Sms message);
+	void add(Sms message);
 
-    List<Sms> find(String address, long since);
+	List<Sms> find(String address, long since);
 
-    void removeAll();
+	void removeAll();
 }

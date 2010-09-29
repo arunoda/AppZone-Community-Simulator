@@ -11,41 +11,41 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class AbstractServiceHandler implements ServiceHandler {
 
-    private ServiceHandler nextServiceHandler;
-    private KeywordMatcher keywordMatcher;
+	private ServiceHandler nextServiceHandler;
+	private KeywordMatcher keywordMatcher;
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractServiceHandler.class);
-    
-    @Override
-    public void setNextServiceHandler(ServiceHandler serviceHandler) {
-        this.nextServiceHandler = serviceHandler;
-    }
+	private static final Logger logger = LoggerFactory.getLogger(AbstractServiceHandler.class);
 
-    @Override
-    public void setKeyWordMatcher(KeywordMatcher keywordMatcher) {
-        this.keywordMatcher = keywordMatcher;
-    }
+	@Override
+	public void setNextServiceHandler(ServiceHandler serviceHandler) {
+		this.nextServiceHandler = serviceHandler;
+	}
 
-    @Override
-    public String serve(HttpServletRequest request) {
+	@Override
+	public void setKeyWordMatcher(KeywordMatcher keywordMatcher) {
+		this.keywordMatcher = keywordMatcher;
+	}
 
-        logger.debug("start serving request");
-        if(keywordMatcher.match(request)) {
-            return doProcess(request);
-        } else {
+	@Override
+	public String serve(HttpServletRequest request) {
 
-            if(nextServiceHandler != null) {
-                return nextServiceHandler.serve(request);
-            } else {
-                logger.debug("cannot find any Handler to serve");
-                JSONObject json = new JSONObject();
-                json.put("error", "no handler found");
+		logger.debug("start serving request");
+		if (keywordMatcher.match(request)) {
+			return doProcess(request);
+		} else {
 
-                return json.toJSONString();
-            }
+			if (nextServiceHandler != null) {
+				return nextServiceHandler.serve(request);
+			} else {
+				logger.debug("cannot find any Handler to serve");
+				JSONObject json = new JSONObject();
+				json.put("error", "no handler found");
 
-        }
-    }
+				return json.toJSONString();
+			}
 
-    protected abstract String doProcess(HttpServletRequest request);
+		}
+	}
+
+	protected abstract String doProcess(HttpServletRequest request);
 }

@@ -18,35 +18,39 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PhoneRegistrationServiceHandlerTest extends TestCase {
 
-    private Mockery context ;
+	private Mockery context;
 
-    public void setUp() {
-        context = new Mockery() {{
-            setImposteriser(ClassImposteriser.INSTANCE);
-        }};
+	public void setUp() {
+		context = new Mockery() {
+			{
+				setImposteriser(ClassImposteriser.INSTANCE);
+			}
+		};
 
-        Application.configure(null, null, null);
-        new MemoryMtMessageRepository().removeAll();
-        new MemorySmsRepository().removeAll();
-        new MemoryPhoneRepository().removeAll();
-    }
+		Application.configure(null, null, null);
+		new MemoryMtMessageRepository().removeAll();
+		new MemorySmsRepository().removeAll();
+		new MemoryPhoneRepository().removeAll();
+	}
 
-    public void testServeNormal() {
+	public void testServeNormal() {
 
-        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 
-        PhoneRepository repository = new MemoryPhoneRepository();
-        PhoneRegistrationServiceHandler handler = new PhoneRegistrationServiceHandler(repository);
+		PhoneRepository repository = new MemoryPhoneRepository();
+		PhoneRegistrationServiceHandler handler = new PhoneRegistrationServiceHandler(repository);
 
-        context.checking(new Expectations(){{
-            allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
-            will(returnValue(PhoneRegistrationServiceHandler.MATCHING_KEYWORD));
+		context.checking(new Expectations() {
+			{
+				allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
+				will(returnValue(PhoneRegistrationServiceHandler.MATCHING_KEYWORD));
 
-            allowing(request).getParameter(PhoneRegistrationServiceHandler.KEY_PHONE_NO);
-            will(returnValue("00012"));
+				allowing(request).getParameter(PhoneRegistrationServiceHandler.KEY_PHONE_NO);
+				will(returnValue("00012"));
 
-        }});
+			}
+		});
 
-        assertTrue(handler.serve(request).contains(PhoneRegistrationServiceHandler.JSON_KEY_MD5_PHONE_NO));
-    }
+		assertTrue(handler.serve(request).contains(PhoneRegistrationServiceHandler.JSON_KEY_MD5_PHONE_NO));
+	}
 }

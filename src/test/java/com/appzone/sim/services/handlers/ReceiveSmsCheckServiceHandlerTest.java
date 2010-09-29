@@ -19,46 +19,50 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ReceiveSmsCheckServiceHandlerTest extends TestCase {
 
-    private Mockery context ;
+	private Mockery context;
 
-    public void setUp() {
-        context = new Mockery() {{
-            setImposteriser(ClassImposteriser.INSTANCE);
-        }};
+	public void setUp() {
+		context = new Mockery() {
+			{
+				setImposteriser(ClassImposteriser.INSTANCE);
+			}
+		};
 
-        new MemoryMtMessageRepository().removeAll();
-        new MemorySmsRepository().removeAll();
-        new MemoryPhoneRepository().removeAll();
-    }
+		new MemoryMtMessageRepository().removeAll();
+		new MemorySmsRepository().removeAll();
+		new MemoryPhoneRepository().removeAll();
+	}
 
-    public void testServeNormal() {
+	public void testServeNormal() {
 
-        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 
-        SmsRepository repository = new MemorySmsRepository();
-        ServiceHandler handler = new ReceiveSmsCheckServiceHandler(repository);
+		SmsRepository repository = new MemorySmsRepository();
+		ServiceHandler handler = new ReceiveSmsCheckServiceHandler(repository);
 
-        //setting some dummy messages
-        repository.add(new Sms("message", "001", 10));
-        repository.add(new Sms("message", "001", 12));
-        repository.add(new Sms("message", "001", 13));
-        repository.add(new Sms("message", "002", 10));
-        repository.add(new Sms("message", "002", 10));
+		// setting some dummy messages
+		repository.add(new Sms("message", "001", 10));
+		repository.add(new Sms("message", "001", 12));
+		repository.add(new Sms("message", "001", 13));
+		repository.add(new Sms("message", "002", 10));
+		repository.add(new Sms("message", "002", 10));
 
-        context.checking(new Expectations(){{
-            allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
-            will(returnValue(ReceiveSmsCheckServiceHandler.MATCHING_KEYWORD));
+		context.checking(new Expectations() {
+			{
+				allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
+				will(returnValue(ReceiveSmsCheckServiceHandler.MATCHING_KEYWORD));
 
-            allowing(request).getParameter(ReceiveSmsCheckServiceHandler.KEY_ADDRESS);
-            will(returnValue("001"));
+				allowing(request).getParameter(ReceiveSmsCheckServiceHandler.KEY_ADDRESS);
+				will(returnValue("001"));
 
-            allowing(request).getParameter(ReceiveSmsCheckServiceHandler.KEY_SINCE);
-            will(returnValue("11"));
-        }});
+				allowing(request).getParameter(ReceiveSmsCheckServiceHandler.KEY_SINCE);
+				will(returnValue("11"));
+			}
+		});
 
-        String jsonStr = handler.serve(request);
-        JSONArray result = (JSONArray)JSONValue.parse(jsonStr);
+		String jsonStr = handler.serve(request);
+		JSONArray result = (JSONArray) JSONValue.parse(jsonStr);
 
-        assertEquals(2, result.size());
-    }
+		assertEquals(2, result.size());
+	}
 }

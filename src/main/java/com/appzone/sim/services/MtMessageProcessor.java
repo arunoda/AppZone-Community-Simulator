@@ -17,72 +17,71 @@ import java.util.List;
  */
 public class MtMessageProcessor {
 
-    private MtMessage mtMessage;
-    private final MtMessageRepository mtMessageRepository;
-    private final SmsRepository smsRepository;
-    private final PhoneRepository phoneRepository;
+	private MtMessage mtMessage;
+	private final MtMessageRepository mtMessageRepository;
+	private final SmsRepository smsRepository;
+	private final PhoneRepository phoneRepository;
 
-    private final static Logger logger = LoggerFactory.getLogger(MtMessageProcessor.class);
-    public MtMessageProcessor(MtMessageRepository mtMessageRepository, SmsRepository smsRepository,
-                              PhoneRepository phoneRepository) {
+	private final static Logger logger = LoggerFactory.getLogger(MtMessageProcessor.class);
 
-        logger.debug("creating MtMessageProcessor");
-        this.mtMessageRepository = mtMessageRepository;
-        this.smsRepository = smsRepository;
-        this.phoneRepository = phoneRepository;
-    }
+	public MtMessageProcessor(MtMessageRepository mtMessageRepository, SmsRepository smsRepository,
+			PhoneRepository phoneRepository) {
 
-    
-    public boolean process(MtMessage mtMessage) {
+		logger.debug("creating MtMessageProcessor");
+		this.mtMessageRepository = mtMessageRepository;
+		this.smsRepository = smsRepository;
+		this.phoneRepository = phoneRepository;
+	}
 
-        this.mtMessage = mtMessage;
+	public boolean process(MtMessage mtMessage) {
 
-        mtMessageRepository.add(this.mtMessage);
-        logger.debug("processing mtMessage: {}", mtMessage);
+		this.mtMessage = mtMessage;
 
-        for(String address: this.mtMessage.getAddresses()) {
-            if(!processForAddress(address)) {
-                logger.error("Message Sending failed for adderess: {}", address);                
-                return false;
-            }
-        }
+		mtMessageRepository.add(this.mtMessage);
+		logger.debug("processing mtMessage: {}", mtMessage);
 
+		for (String address : this.mtMessage.getAddresses()) {
+			if (!processForAddress(address)) {
+				logger.error("Message Sending failed for adderess: {}", address);
+				return false;
+			}
+		}
 
-        return true;
+		return true;
 
-    }
+	}
 
-    public boolean processForAddress(String address) {
+	public boolean processForAddress(String address) {
 
-        boolean processed = false;
-        String[] parts = address.split(":");
+		boolean processed = false;
+		String[] parts = address.split(":");
 
-        logger.debug("parsing address string: {} into: {}",address, parts);
-        if(parts.length == 2) {
+		logger.debug("parsing address string: {} into: {}", address, parts);
+		if (parts.length == 2) {
 
-            if("tel".equals(parts[0])) {
+			if ("tel".equals(parts[0])) {
 
-                Sms sms = new Sms(mtMessage.getMessage(), parts[1], new Date().getTime());
-                logger.debug("sending sms: {}", sms);
-                smsRepository.add(sms);
-                processed = true;
+				Sms sms = new Sms(mtMessage.getMessage(), parts[1], new Date().getTime());
+				logger.debug("sending sms: {}", sms);
+				smsRepository.add(sms);
+				processed = true;
 
-            } else if("list".equals(parts[0])) {
-                //send messages to all
+			} else if ("list".equals(parts[0])) {
+				// send messages to all
 
-                List<Phone> phones = phoneRepository.findAll();
-                logger.debug("sending message: {} for all: {}", mtMessage, phones);
+				List<Phone> phones = phoneRepository.findAll();
+				logger.debug("sending message: {} for all: {}", mtMessage, phones);
 
-                for(Phone phone: phones) {
-                    Sms sms = new Sms(mtMessage.getMessage(), phone.getAddress(), new Date().getTime());
-                    smsRepository.add(sms);
-                }
-                processed = true;
-                
-            }
+				for (Phone phone : phones) {
+					Sms sms = new Sms(mtMessage.getMessage(), phone.getAddress(), new Date().getTime());
+					smsRepository.add(sms);
+				}
+				processed = true;
 
-        }
+			}
 
-        return processed;
-    }
+		}
+
+		return processed;
+	}
 }

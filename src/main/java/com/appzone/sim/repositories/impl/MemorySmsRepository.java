@@ -15,45 +15,45 @@ import java.util.Map;
  */
 public class MemorySmsRepository implements SmsRepository {
 
-    private static Map<String,  List<Sms>> map = new HashMap<String,  List<Sms>>();
+	private static Map<String, List<Sms>> map = new HashMap<String, List<Sms>>();
 
-    private final static Logger logger = LoggerFactory.getLogger(MemorySmsRepository.class);
+	private final static Logger logger = LoggerFactory.getLogger(MemorySmsRepository.class);
 
-    @Override
-    public void add(Sms message) {
+	@Override
+	public void add(Sms message) {
 
-        logger.debug("adding sms: {}", message);
+		logger.debug("adding sms: {}", message);
 
-        List<Sms> smsList = map.get(message.getAddress());
-        if(smsList == null) {
-            smsList = new ArrayList<Sms>();
-            logger.debug("creating a new list for the address: {}", message.getAddress());
-            map.put(message.getAddress(), smsList);
-        }
+		List<Sms> smsList = map.get(message.getAddress());
+		if (smsList == null) {
+			smsList = new ArrayList<Sms>();
+			logger.debug("creating a new list for the address: {}", message.getAddress());
+			map.put(message.getAddress(), smsList);
+		}
 
-        smsList.add(message);
-    }
+		smsList.add(message);
+	}
 
-    @Override
-    public List<Sms> find(String address, long since) {
+	@Override
+	public List<Sms> find(String address, long since) {
 
-        logger.debug("finding sms for address: {} since: {}", address, since);
-        List<Sms> smsList = (map.get(address) == null)? new ArrayList<Sms>(): map.get(address);
-        List<Sms> newList = new ArrayList<Sms>();
+		logger.debug("finding sms for address: {} since: {}", address, since);
+		List<Sms> smsList = (map.get(address) == null) ? new ArrayList<Sms>() : map.get(address);
+		List<Sms> newList = new ArrayList<Sms>();
 
-        for(Sms sms: smsList) {
-            if(sms.getReceivedDate() > since) {
-                newList.add(sms);
-            }
-        }
+		for (Sms sms : smsList) {
+			if (sms.getReceivedDate() > since) {
+				newList.add(sms);
+			}
+		}
 
-        return newList;
-    }
+		return newList;
+	}
 
-    @Override
-    public void removeAll() {
+	@Override
+	public void removeAll() {
 
-        logger.debug("removing all the mtMessages");
-        map.clear();
-    }
+		logger.debug("removing all the mtMessages");
+		map.clear();
+	}
 }

@@ -7,18 +7,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ServiceHandler {
 
-    String JSON_KEY_RESULT = "result";
-    String JSON_KEY_ERROR = "error";
+	String JSON_KEY_RESULT = "result";
+	String JSON_KEY_ERROR = "error";
 
-    void setNextServiceHandler(ServiceHandler serviceHandler);
+	void setNextServiceHandler(ServiceHandler serviceHandler);
 
-    void setKeyWordMatcher(KeywordMatcher keyWordMatcher);
+	void setKeyWordMatcher(KeywordMatcher keyWordMatcher);
 
-    /**
-     * Start serving the request with the help of keyword matcher
-     * if the class cannot serve it'll call the nextHandler if exists
-     * @param request
-     * @return
-     */
-    String serve(HttpServletRequest request);
+	/**
+	 * Start serving the request with the help of keyword matcher if the class
+	 * cannot serve it'll call the nextHandler if exists
+	 * 
+	 * @param request
+	 * @return
+	 */
+	String serve(HttpServletRequest request);
 }

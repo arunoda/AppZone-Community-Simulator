@@ -7,5 +7,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface KeywordMatcher {
 
-    boolean match(HttpServletRequest request);
+	boolean match(HttpServletRequest request);
 }

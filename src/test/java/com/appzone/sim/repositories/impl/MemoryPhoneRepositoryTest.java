@@ -9,43 +9,43 @@ import junit.framework.TestCase;
  */
 public class MemoryPhoneRepositoryTest extends TestCase {
 
-    public void setUp() {
-        new MemoryPhoneRepository().removeAll();
-    }
+	public void setUp() {
+		new MemoryPhoneRepository().removeAll();
+	}
 
-    public void testAddAndFind() {
+	public void testAddAndFind() {
 
-        PhoneRepository repo = new MemoryPhoneRepository();
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
+		PhoneRepository repo = new MemoryPhoneRepository();
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
 
-        assertEquals(4, repo.findAll().size());
-    }
+		assertEquals(4, repo.findAll().size());
+	}
 
-    public void testRemove() {
+	public void testRemove() {
 
-        PhoneRepository repo = new MemoryPhoneRepository();
-        repo.add(new Phone("1111"));
-        repo.add(new Phone("22"));
+		PhoneRepository repo = new MemoryPhoneRepository();
+		repo.add(new Phone("1111"));
+		repo.add(new Phone("22"));
 
-        repo.remove("1111");
+		repo.remove("1111");
 
-        assertEquals(1, repo.findAll().size());
-        assertEquals("22", repo.findAll().get(0).getAddress());
-    }
+		assertEquals(1, repo.findAll().size());
+		assertEquals("22", repo.findAll().get(0).getAddress());
+	}
 
-    public void testRemoveAll() {
+	public void testRemoveAll() {
 
-       PhoneRepository repo = new MemoryPhoneRepository();
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
-        repo.add(new Phone("sdssds"));
+		PhoneRepository repo = new MemoryPhoneRepository();
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
+		repo.add(new Phone("sdssds"));
 
-        repo.removeAll();
+		repo.removeAll();
 
-        assertEquals(0, new MemoryPhoneRepository().findAll().size());
-    }
+		assertEquals(0, new MemoryPhoneRepository().findAll().size());
+	}
 }

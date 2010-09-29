@@ -11,8 +11,8 @@ import com.appzone.sim.model.Application;
 public class BasicAuthAuthenticationService implements AuthenticationService {
 
 	private final Application application;
-	private final static Logger logger = LoggerFactory.getLogger(BasicAuthAuthenticationService.class); 
-	
+	private final static Logger logger = LoggerFactory.getLogger(BasicAuthAuthenticationService.class);
+
 	public BasicAuthAuthenticationService(Application application) {
 
 		this.application = application;
@@ -20,27 +20,27 @@ public class BasicAuthAuthenticationService implements AuthenticationService {
 
 	@Override
 	public boolean authenticate(HttpServletRequest request) {
-		
-		//Autherization header
+
+		// Autherization header
 		String auth = request.getHeader("Authorization");
 		logger.debug("Basic Auth header: {}", auth);
-		if(auth == null || auth.trim().length() < 6) return false;
-		
-		auth = auth.substring(6); //remove "BASIC "
-		
+		if (auth == null || auth.trim().length() < 6)
+			return false;
+
+		auth = auth.substring(6); // remove "BASIC "
+
 		String decoded = new String(Base64.decodeBase64(auth));
 		logger.debug("Decoded Basic Auth: {}", decoded);
-		
+
 		String parts[] = decoded.split(":");
 
 		return checkAuthentication(parts[0], parts[1]);
 	}
 
 	private boolean checkAuthentication(String username, String password) {
-		
+
 		logger.debug("Authenticate against: {} : {}", username, password);
-		return username.equals(application.getUsername()) &&
-			password.equals(application.getPassword());
+		return username.equals(application.getUsername()) && password.equals(application.getPassword());
 	}
 
 }

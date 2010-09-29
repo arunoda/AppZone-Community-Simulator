@@ -21,45 +21,50 @@ import java.util.Arrays;
  */
 public class MtLogCheckServiceHandlerTest extends TestCase {
 
-    private Mockery context ;
+	private Mockery context;
 
-    public void setUp() {
-        context = new Mockery() {{
-            setImposteriser(ClassImposteriser.INSTANCE);
-        }};
+	public void setUp() {
+		context = new Mockery() {
+			{
+				setImposteriser(ClassImposteriser.INSTANCE);
+			}
+		};
 
-        new MemoryMtMessageRepository().removeAll();
-        new MemorySmsRepository().removeAll();
-        new MemoryPhoneRepository().removeAll();
-    }
+		new MemoryMtMessageRepository().removeAll();
+		new MemorySmsRepository().removeAll();
+		new MemoryPhoneRepository().removeAll();
+	}
 
-    public void testServeNormal() {
+	public void testServeNormal() {
 
-        final HttpServletRequest request = context.mock(HttpServletRequest.class);
+		final HttpServletRequest request = context.mock(HttpServletRequest.class);
 
-        MtMessageRepository repository = new MemoryMtMessageRepository();
-        ServiceHandler handler = new MtLogCheckServiceHandler(repository);
+		MtMessageRepository repository = new MemoryMtMessageRepository();
+		ServiceHandler handler = new MtLogCheckServiceHandler(repository);
 
-        //setting some dummy messages
-        repository.add(new MtMessage("message", null, 10));
-        repository.add(new MtMessage("message", null, 100));
-        repository.add(new MtMessage("message", null, 101));
-        repository.add(new MtMessage("message", null, 1001));
-        repository.add(new MtMessage("message", Arrays.asList(new String[]{"tel:823728", "list:all_registered"}), 999));
+		// setting some dummy messages
+		repository.add(new MtMessage("message", null, 10));
+		repository.add(new MtMessage("message", null, 100));
+		repository.add(new MtMessage("message", null, 101));
+		repository.add(new MtMessage("message", null, 1001));
+		repository.add(new MtMessage("message", Arrays.asList(new String[] { "tel:823728", "list:all_registered" }),
+				999));
 
-        context.checking(new Expectations(){{
-            allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
-            will(returnValue(MtLogCheckServiceHandler.MATCHING_KEYWORD));
+		context.checking(new Expectations() {
+			{
+				allowing(request).getParameter(DefaultKewordMatcher.SERVICE_KEYWORD);
+				will(returnValue(MtLogCheckServiceHandler.MATCHING_KEYWORD));
 
-            allowing(request).getParameter(MtLogCheckServiceHandler.KEY_SINCE);
-            will(returnValue("900"));
-        }});
+				allowing(request).getParameter(MtLogCheckServiceHandler.KEY_SINCE);
+				will(returnValue("900"));
+			}
+		});
 
-        String jsonStr = handler.serve(request);
-        JSONArray result = (JSONArray)JSONValue.parse(jsonStr);
+		String jsonStr = handler.serve(request);
+		JSONArray result = (JSONArray) JSONValue.parse(jsonStr);
 
-        assertEquals(2, result.size());
-        JSONArray addresses = (JSONArray)((JSONObject)result.get(1)).get(MtLogCheckServiceHandler.JSON_KEY_ADDRESSES);
-        assertEquals(2, addresses.size());
-    }
+		assertEquals(2, result.size());
+		JSONArray addresses = (JSONArray) ((JSONObject) result.get(1)).get(MtLogCheckServiceHandler.JSON_KEY_ADDRESSES);
+		assertEquals(2, addresses.size());
+	}
 }

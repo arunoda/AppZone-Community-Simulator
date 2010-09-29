@@ -23,44 +23,44 @@ import java.io.IOException;
  */
 public class Service extends HttpServlet {
 
-    private final static Logger logger = LoggerFactory.getLogger(Service.class);
+	private final static Logger logger = LoggerFactory.getLogger(Service.class);
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        logger.debug("Starting service with : {}", req.getQueryString());
+		logger.debug("Starting service with : {}", req.getQueryString());
 
-        ServiceHandler serviceHandler = buildServiceHandlerChain();
-        String response = serviceHandler.serve(req);
+		ServiceHandler serviceHandler = buildServiceHandlerChain();
+		String response = serviceHandler.serve(req);
 
-        logger.debug("Printing response: {}", response);
-        resp.getWriter().print(response);
-    }
+		logger.debug("Printing response: {}", response);
+		resp.getWriter().print(response);
+	}
 
-    private ServiceHandler buildServiceHandlerChain() {
+	private ServiceHandler buildServiceHandlerChain() {
 
-        logger.debug("creating ServiceHandler chain");
-        
-        SmsRepository smsRepository = new MemorySmsRepository();
-        MtMessageRepository mtMessageRepository = new MemoryMtMessageRepository();
-        PhoneRepository phoneRepository = new MemoryPhoneRepository();
-        Application application = Application.getApplication();
-        EasyHttp http = new EasyHttp();
-        
-        ServiceHandler appRegistrationServiceHandler = new AppRegistrationServiceHandler();
-        ServiceHandler phoneRegistrationServiceHandler = new PhoneRegistrationServiceHandler(phoneRepository);
-        ServiceHandler receiveSmsCheckServiceHandler = new ReceiveSmsCheckServiceHandler(smsRepository);
-        ServiceHandler mtLogCheckServiceHandler = new MtLogCheckServiceHandler(mtMessageRepository);
-        ServiceHandler sendMoServiceHandler = new SendMoServiceHandler(application, http);
+		logger.debug("creating ServiceHandler chain");
 
-        ServiceHandler rootServiceHandler = mtLogCheckServiceHandler;
-        
-        rootServiceHandler.setNextServiceHandler(receiveSmsCheckServiceHandler);
-        receiveSmsCheckServiceHandler.setNextServiceHandler(sendMoServiceHandler);
-        sendMoServiceHandler.setNextServiceHandler(phoneRegistrationServiceHandler);
-        phoneRegistrationServiceHandler.setNextServiceHandler(appRegistrationServiceHandler);
+		SmsRepository smsRepository = new MemorySmsRepository();
+		MtMessageRepository mtMessageRepository = new MemoryMtMessageRepository();
+		PhoneRepository phoneRepository = new MemoryPhoneRepository();
+		Application application = Application.getApplication();
+		EasyHttp http = new EasyHttp();
 
-        return rootServiceHandler;
+		ServiceHandler appRegistrationServiceHandler = new AppRegistrationServiceHandler();
+		ServiceHandler phoneRegistrationServiceHandler = new PhoneRegistrationServiceHandler(phoneRepository);
+		ServiceHandler receiveSmsCheckServiceHandler = new ReceiveSmsCheckServiceHandler(smsRepository);
+		ServiceHandler mtLogCheckServiceHandler = new MtLogCheckServiceHandler(mtMessageRepository);
+		ServiceHandler sendMoServiceHandler = new SendMoServiceHandler(application, http);
 
-    }
+		ServiceHandler rootServiceHandler = mtLogCheckServiceHandler;
+
+		rootServiceHandler.setNextServiceHandler(receiveSmsCheckServiceHandler);
+		receiveSmsCheckServiceHandler.setNextServiceHandler(sendMoServiceHandler);
+		sendMoServiceHandler.setNextServiceHandler(phoneRegistrationServiceHandler);
+		phoneRegistrationServiceHandler.setNextServiceHandler(appRegistrationServiceHandler);
+
+		return rootServiceHandler;
+
+	}
 }

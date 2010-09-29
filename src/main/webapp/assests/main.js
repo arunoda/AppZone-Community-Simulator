@@ -16,8 +16,8 @@ function displaySimulatorInfo() {
 	var url = location.href
 	if (url.substr(url.length - 1, url.length) != "/")
 		url += "/"
-	url += "simulator"
-	$('#heading #simulator-info input').attr('value', url);
+			url += "simulator"
+				$('#heading #simulator-info input').attr('value', url);
 }
 
 function enableToolTipSupport() {
@@ -32,7 +32,7 @@ function enableToolTipSupport() {
  * LOG VIEW
  ******************************************************************************/
 var maxLogDate = 0
-// the maximum date a log has
+//the maximum date a log has
 var table = new Table("#logs #serverLog");
 
 $(document).ready(function() {
@@ -49,18 +49,18 @@ function getServerLog() {
 
 		for (index in response) {
 			var message = response[index]
-			var time = parseFloat(message.receivedDate)
-			var date = new Date(time)
+			                       var time = parseFloat(message.receivedDate)
+			                       var date = new Date(time)
 
 			// adding items to the table
 			var item = [ date.format("dd-mm-yyyy @ HH:MM:ss"),
-					escapeHTML(message.message), message.addresses.join(",") ]
+			             escapeHTML(message.message), message.addresses.join(",") ]
 
-			table.prependRow(item)
+			             table.prependRow(item)
 
-			// coz now logs are comming as decending order
-			if (time > maxLogDate)
-				maxLogDate = time
+			             // coz now logs are comming as decending order
+			             if (time > maxLogDate)
+			            	 maxLogDate = time
 		}
 	});
 
@@ -69,7 +69,7 @@ function getServerLog() {
 
 function createLogTable() {
 
-	table.setHeading([ {
+	table.setHeading( [ {
 		name : "date",
 		title : "Received Date",
 		width : 170
@@ -92,44 +92,45 @@ var totalPhones = 0;
 var inboxes = {}
 var maxSmsLogDates = []
 
-$(document).ready(function() {
-	$('#phones #newPhone').click(function() {
-		var phoneNo = $('#phones #phoneNo').attr('value');
-		// validation
-		if (phoneNo.trim() == "") {
-			alert("Please enter the Phone Number");
-			$('#phones #phoneNo').focus();
-			return;
-		}
-		
-		//notify server about the creation of the phone
-		$.get('service?service=phone&number=' + phoneNo, function(resp) {
-			var response = {}
-			eval("response = " + resp);
-			new Phone(response.md5PhoneNo, phoneNo);
-			$('#phones #phoneNo').attr('value', '');
-			totalPhones++;
-		});
-	});
+                      $(document).ready(function() {
+                    	  $('#phones #newPhone').click(function() {
+                    		  var phoneNo = $('#phones #phoneNo').attr('value');
+                    		  // validation
+                    		  if (phoneNo.trim() == "") {
+                    			  alert("Please enter the Phone Number");
+                    			  $('#phones #phoneNo').focus();
+                    			  return;
+                    		  }
 
-});
+                    		  // notify server about the creation of the phone
+                    		  $.get('service?service=phone&number=' + phoneNo, function(resp) {
+                    			  var response = {}
+                    			  eval("response = " + resp);
+                    			  new Phone(response.md5PhoneNo, phoneNo);
+                    			  $('#phones #phoneNo').attr('value', '');
+                    			  totalPhones++;
+                    		  });
+                    	  });
+
+                      });
 
 function Phone(md5PhoneNo, phoneNo) {
 
 	// Phone UI Creation
 	$phoneDiv = '<div id="' + md5PhoneNo + '" class="phone">'
-			+ $('#samplePhone').html() + '</div>';
+	+ $('#samplePhone').html() + '</div>';
 	$('#phoneList').append($phoneDiv);
 	var index = $('#phoneList').tabs('add', "#" + md5PhoneNo, phoneNo);
 	$('#phoneList').tabs('select', totalPhones);
 	$('#' + md5PhoneNo + ' .message').focus();
-	//display md5Name Info
-	$('#' + md5PhoneNo + ' .md5Name').text("Internally Represent as: " + md5PhoneNo);
+	// display md5Name Info
+	$('#' + md5PhoneNo + ' .md5Name').text(
+			"Internally Represent as: " + md5PhoneNo);
 	$('#' + md5PhoneNo + ' .md5Name').tooltip().dynamic();
-	
+
 	// create the inbox
 	var inbox = new Table('#' + md5PhoneNo + ' .inbox');
-	inbox.setHeading([ {
+	inbox.setHeading( [ {
 		name : "date",
 		title : "Received Date",
 		width : 170
@@ -146,14 +147,16 @@ function Phone(md5PhoneNo, phoneNo) {
 	getSMSLog(md5PhoneNo);
 
 	// Send MO Functionality
-	$('#' + md5PhoneNo + ' .send').click(
+	$('#' + md5PhoneNo + ' .send')
+	.click(
 			function() {
 
 				var callback = function(resp) {
 					var response = {}
 					eval("response = " + resp)
-					if(response['error']) {
-						alert(response.error + "\nPlease Configure the Simulator for Receiver URL")
+					if (response['error']) {
+						alert(response.error
+								+ "\nPlease Configure the Simulator for Receiver URL")
 					} else {
 						alert("Messege Sent!");
 					}
@@ -162,10 +165,11 @@ function Phone(md5PhoneNo, phoneNo) {
 					$('#' + md5PhoneNo + ' .message').focus()
 				}
 
-				var message = $('#' + md5PhoneNo + ' .message').attr('value')
+				var message = $('#' + md5PhoneNo + ' .message').attr(
+				'value')
 
-				$.get('service?service=sendmo&address=' + md5PhoneNo + '&message='
-						+ message, callback);
+				$.get('service?service=sendmo&address=' + md5PhoneNo
+						+ '&message=' + message, callback);
 			});
 
 }
@@ -178,11 +182,11 @@ function getSMSLog(md5PhoneNo) {
 		eval("response = " + resp)
 		for (index in response) {
 			var sms = response[index]
-			var time = parseFloat(sms.receivedDate)
-			var date = new Date(time)
+			                   var time = parseFloat(sms.receivedDate)
+			                   var date = new Date(time)
 			// adding item to the table
 			var item = [ date.format("dd-mm-yyyy @ HH:MM"),
-					escapeHTML(sms.message) ];
+			             escapeHTML(sms.message) ];
 			inboxes[md5PhoneNo].prependRow(item)
 
 			if (time > maxSmsLogDates[md5PhoneNo])
@@ -200,43 +204,47 @@ function getSMSLog(md5PhoneNo) {
  * SESSION
  ******************************************************************************/
 
-$(document).ready(
-		function() {
+$(document).ready(function() {
 
-			$('#btn-config').click(function() {
-				$("#createSession").dialog({
-					width : 450,
-					height : 200,
-					modal : true
-				});
-				
-				//use 2 times inorder get focus on the appId field with the tooltip 
-				$('#createSession #appName').focus();
-				$('#createSession #appName').focus();
-				
-			});
+	// load default values to the Configuration Box
+	$.get('service?service=app&infoRequest=true', function(resp) {
+		var response = {}
+		eval("response = " + resp)
 
-			$('#createSessionBtn')
-					.click(
-							function() {
-								$appName = $('#createSession #appName').attr(
-										'value');
-								$password = $('#createSession #password').attr(
-										'value');
-								$reciever = $('#createSession #reciever').attr(
-										'value');
+		$('#createSession #appName').attr('value', response.username)
+		$('#createSession #password').attr('value', response.password);
+		$('#createSession #reciever').attr('value', response.url);
+	})
 
-								$.get(
-										'service?service=app&action=create&username='
-												+ $appName + '&password='
-												+ $password + '&url='
-												+ $reciever, function($rest) {
-											alert("Simulator Configured!");
-										});
-
-								$("#createSession").dialog('close');
-							});
+	$('#btn-config').click(function() {
+		$("#createSession").dialog( {
+			width : 450,
+			height : 200,
+			modal : true
 		});
+
+		// use 2 times inorder get focus on the appId field with the
+		// tooltip
+		$('#createSession #appName').focus();
+		$('#createSession #appName').focus();
+
+	});
+
+	$('#createSessionBtn').click(
+			function() {
+				$appName = $('#createSession #appName').attr('value');
+				$password = $('#createSession #password').attr('value');
+				$reciever = $('#createSession #reciever').attr('value');
+
+				$.get('service?service=app&action=create&username='
+						+ $appName + '&password=' + $password + '&url='
+						+ $reciever, function($rest) {
+							alert("Simulator Configured!");
+						});
+
+				$("#createSession").dialog('close');
+			});
+});
 
 /*******************************************************************************
  * Utility Functions

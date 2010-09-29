@@ -13,31 +13,30 @@ import java.net.URL;
  */
 public class EasyHttp {
 
-    private final static Logger logger = LoggerFactory.getLogger(EasyHttp.class);
-    /*
-    public MchoiceAventuraResponse sendMessage(String content, String address) throws MchoiceAventuraMessagingException {
+	private final static Logger logger = LoggerFactory.getLogger(EasyHttp.class);
 
-		try {
-			String urlParameters = "version=" + URLEncoder.encode("1.0", "UTF-8") + "&message="
-					+ URLEncoder.encode(content, "UTF-8") + "&address=" + URLEncoder.encode("tel:" + address, "UTF-8");
+	/*
+	 * public MchoiceAventuraResponse sendMessage(String content, String
+	 * address) throws MchoiceAventuraMessagingException {
+	 * 
+	 * try { String urlParameters = "version=" + URLEncoder.encode("1.0",
+	 * "UTF-8") + "&message=" + URLEncoder.encode(content, "UTF-8") +
+	 * "&address=" + URLEncoder.encode("tel:" + address, "UTF-8");
+	 * 
+	 * if (logger.isDebugEnabled()) { logger.debug("requesting - httpHost:" +
+	 * this.httpHost + "auth" + this.authId + ":" + this.password +
+	 * "\nurlParams: " + urlParameters); }
+	 * 
+	 * String response = excutePost(this.httpHost, this.authId, this.password,
+	 * urlParameters); logger.info("response :" + response);
+	 * 
+	 * return new MchoiceAventuraResponse(response);
+	 * 
+	 * } catch (UnsupportedEncodingException e) { throw new
+	 * MchoiceAventuraMessagingException("Encoding error in urlParams", e); } }
+	 */
 
-			if (logger.isDebugEnabled()) {
-				logger.debug("requesting - httpHost:" + this.httpHost + "auth" + this.authId + ":" + this.password
-						+ "\nurlParams: " + urlParameters);
-			}
-
-			String response = excutePost(this.httpHost, this.authId, this.password, urlParameters);
-			logger.info("response :" + response);
-
-			return new MchoiceAventuraResponse(response);
-
-		} catch (UnsupportedEncodingException e) {
-			throw new MchoiceAventuraMessagingException("Encoding error in urlParams", e);
-		}
-	} */
-
-	public String excutePost(String targetURL, String urlParameters)
-            throws Exception {
+	public String excutePost(String targetURL, String urlParameters) throws Exception {
 		URL url;
 		HttpURLConnection connection = null;
 		try {
@@ -97,7 +96,7 @@ public class EasyHttp {
 		return response.toString();
 	}
 
-    private void setSdpHeaderParams(HttpURLConnection connection) throws ProtocolException {
+	private void setSdpHeaderParams(HttpURLConnection connection) throws ProtocolException {
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Accept", "text/xml");
 		connection.setRequestProperty("Content-type", "application/x-www-form-urlencoded");

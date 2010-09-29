@@ -11,43 +11,42 @@ import java.util.Arrays;
  */
 public class MemoryMtMessageRepositortTest extends TestCase {
 
-    public void setUp() {
-        new MemoryMtMessageRepository().removeAll();        
-    }
-    public void testAddAndFind() {
+	public void setUp() {
+		new MemoryMtMessageRepository().removeAll();
+	}
 
-        MtMessage m1 = new MtMessage("message", Arrays.asList(new String[] {"add1", "add2"}), 112);
-        MtMessageRepository repo = new MemoryMtMessageRepository();
-        repo.add(m1);
+	public void testAddAndFind() {
 
-        assertEquals(1, repo.find(0).size());
-        assertEquals("message", repo.find(0).get(0).getMessage());
-    }
+		MtMessage m1 = new MtMessage("message", Arrays.asList(new String[] { "add1", "add2" }), 112);
+		MtMessageRepository repo = new MemoryMtMessageRepository();
+		repo.add(m1);
 
-    public void testFind() {
+		assertEquals(1, repo.find(0).size());
+		assertEquals("message", repo.find(0).get(0).getMessage());
+	}
 
-        MtMessageRepository repo = new MemoryMtMessageRepository();
-        repo.add(new MtMessage("m1", null, 10));
-        repo.add(new MtMessage("m2", null, 20));
-        repo.add(new MtMessage("m3", null, 22));
-        repo.add(new MtMessage("m4", null, 9));
+	public void testFind() {
 
-        assertEquals(2, repo.find(10).size());
+		MtMessageRepository repo = new MemoryMtMessageRepository();
+		repo.add(new MtMessage("m1", null, 10));
+		repo.add(new MtMessage("m2", null, 20));
+		repo.add(new MtMessage("m3", null, 22));
+		repo.add(new MtMessage("m4", null, 9));
 
-    }
+		assertEquals(2, repo.find(10).size());
 
-    public void testRemoveAll(){
+	}
 
-        MtMessageRepository repo = new MemoryMtMessageRepository();
-        repo.add(new MtMessage("m1", null, 10));
-        repo.add(new MtMessage("m2", null, 20));
-        repo.add(new MtMessage("m3", null, 22));
-        repo.add(new MtMessage("m4", null, 9));
+	public void testRemoveAll() {
 
-        repo.removeAll();
-        assertEquals(0, repo.find(0).size());
-    }
+		MtMessageRepository repo = new MemoryMtMessageRepository();
+		repo.add(new MtMessage("m1", null, 10));
+		repo.add(new MtMessage("m2", null, 20));
+		repo.add(new MtMessage("m3", null, 22));
+		repo.add(new MtMessage("m4", null, 9));
 
-
+		repo.removeAll();
+		assertEquals(0, repo.find(0).size());
+	}
 
 }

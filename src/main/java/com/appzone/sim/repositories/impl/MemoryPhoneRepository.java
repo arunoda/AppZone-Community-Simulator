@@ -13,45 +13,44 @@ import java.util.List;
  */
 public class MemoryPhoneRepository implements PhoneRepository {
 
-    private final static List<Phone> phones= new ArrayList<Phone>();
+	private final static List<Phone> phones = new ArrayList<Phone>();
 
-    private final static Logger logger = LoggerFactory.getLogger(MemoryPhoneRepository.class);
+	private final static Logger logger = LoggerFactory.getLogger(MemoryPhoneRepository.class);
 
-    @Override
-    public void add(Phone phone) {
+	@Override
+	public void add(Phone phone) {
 
-        logger.debug("adding Phone: {}", phone);
-        
-        synchronized (phones) {
-            phones.add(phone);
-        }
-    }
+		logger.debug("adding Phone: {}", phone);
 
+		synchronized (phones) {
+			phones.add(phone);
+		}
+	}
 
-    @Override
-    public boolean remove(String address) {
+	@Override
+	public boolean remove(String address) {
 
-        logger.debug("removing phone with address: {}", address);
-        boolean rtn = false;
-        synchronized (phones) {
-            rtn = phones.remove(new Phone(address));
-        }
+		logger.debug("removing phone with address: {}", address);
+		boolean rtn = false;
+		synchronized (phones) {
+			rtn = phones.remove(new Phone(address));
+		}
 
-        return rtn;
-    }
+		return rtn;
+	}
 
-    @Override
-    public void removeAll() {
+	@Override
+	public void removeAll() {
 
-        logger.debug("removinf add phones");
+		logger.debug("removinf add phones");
 
-        synchronized (phones) {
-            phones.clear();
-        }
-    }
+		synchronized (phones) {
+			phones.clear();
+		}
+	}
 
-    @Override
-    public List<Phone> findAll() {
-        return phones;
-    }
+	@Override
+	public List<Phone> findAll() {
+		return phones;
+	}
 }

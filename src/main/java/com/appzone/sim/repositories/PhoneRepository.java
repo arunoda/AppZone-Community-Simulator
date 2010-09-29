@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface PhoneRepository {
 
-    void add(Phone phone);
+	void add(Phone phone);
 
-    List<Phone> findAll();
+	List<Phone> findAll();
 
-    boolean remove(String address);
+	boolean remove(String address);
 
-    void removeAll();
+	void removeAll();
 }

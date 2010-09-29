@@ -5,31 +5,31 @@ package com.appzone.sim.model;
  */
 public class Sms {
 
-    String message;
-    String address;
-    long receivedDate;
+	String message;
+	String address;
+	long receivedDate;
 
-    public Sms(String message, String address, long receivedDate) {
-        this.message = message;
-        this.address = address;
-        this.receivedDate = receivedDate;
-    }
+	public Sms(String message, String address, long receivedDate) {
+		this.message = message;
+		this.address = address;
+		this.receivedDate = receivedDate;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public long getReceivedDate() {
-        return receivedDate;
-    }
+	public long getReceivedDate() {
+		return receivedDate;
+	}
 
-    @Override
-    public String toString() {
+	@Override
+	public String toString() {
 
-        return String.format("%s :: %s :: %s", message, address, receivedDate);
-    }
+		return String.format("%s :: %s :: %s", message, address, receivedDate);
+	}
 }

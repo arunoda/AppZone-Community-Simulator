@@ -135,7 +135,7 @@ function Phone(md5PhoneNo, phoneNo) {
 	$('#' + md5PhoneNo + ' .message').focus();
 	// display md5Name Info
 	$('#' + md5PhoneNo + ' .md5Name').text(
-			"Internally Represent as: " + md5PhoneNo);
+			"Phone No Internally Represent as: " + md5PhoneNo);
 	$('#' + md5PhoneNo + ' .md5Name').tooltip().dynamic();
 
 	// create the inbox

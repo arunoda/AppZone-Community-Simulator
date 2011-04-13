@@ -55,9 +55,6 @@ public class SendMoServiceHandler extends AbstractServiceHandler {
 			String queryString = String.format("version=1.0&address=%s&message=%s&correlator=%s", address, URLEncoder.encode(
 					message, "UTF-8"), URLEncoder.encode(correlator, "UTF-8"));
 			
-			System.out.println("---- " + message);
-			System.out.println("++++ " + queryString + "\n");
-
 			logger.info("sending MO request as: {}", queryString);
 			String response = http.excutePost(application.getUrl(), queryString);
 			logger.debug("getting response as: {}", response);

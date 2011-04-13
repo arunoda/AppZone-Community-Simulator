@@ -177,9 +177,11 @@ function Phone(md5PhoneNo, phoneNo) {
 
 				var message = $('#' + md5PhoneNo + ' .message').attr(
 				'value')
+				
+				console.log("the message: " + message);
 
 				$.get('service?service=sendmo&address=' + md5PhoneNo
-						+ '&message=' + message, callback);
+						+ '&message=' + escape(message), callback);
 			});
 
 }

@@ -4,7 +4,7 @@
     <groupId>com.appzone.sim</groupId>
     <artifactId>appzone-simulator</artifactId>
     <packaging>war</packaging>
-    <version>0.3</version>
+    <version>0.4</version>
     <name>appzone-simulator Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
